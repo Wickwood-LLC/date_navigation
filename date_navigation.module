@@ -198,3 +198,26 @@ function _date_navigation_get_archive_tree() {
   }
   return $tree;
 }
+
+/**
+ * Fetch the nid and created-date of all published content.
+ *
+ * @return array
+ * An array of objects, each with the property nid and created, 
+ * sorted by creation-time (new to old).
+ */
+function _wp_blog__get_blog_posts() {
+  $blog_posts = &drupal_static(__FUNCTION__, NULL);
+  if (is_null($blog_posts)) {
+    // Query for WP blog nodes which the current user has access to.
+    $blog_posts = db_select('node', 'n', array('target' => 'slave'))
+      ->fields('n', array('nid', 'created'))
+      ->condition("n.type", WP_BLOG_DEFAULT_CTYPE)
+      ->condition("n.status", NODE_PUBLISHED)
+      ->orderBy("n.created", 'DESC')
+      ->addTag('node_access')
+      ->execute()
+      ->fetchAll();
+  }
+  return $blog_posts;
+}
