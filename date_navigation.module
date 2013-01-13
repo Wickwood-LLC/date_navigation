@@ -47,3 +47,12 @@ function date_navigation_permission() {
   );
 }
 
+/**
+ * Implements hook_views_api().
+ */
+function date_navigation_views_api() {
+  return array(
+    'api' => 3,
+  );
+}
+
