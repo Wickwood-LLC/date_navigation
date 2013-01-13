@@ -34,7 +34,6 @@ update date.  But in reality for most users, the important date is when the cont
   }
 }
 
-
 /*
  * Implements hook_permission
  */
