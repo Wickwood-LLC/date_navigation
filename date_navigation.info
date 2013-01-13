@@ -1,0 +1,8 @@
+; $Id: $
+name = Date Navigation
+description = Provide archive navigation blocks by date similar to WordPress. 
+core = 7.x
+version = 1.x-dev-wwm
+
+configure = admin/structure/date_navigation/settings
+
