@@ -82,3 +82,30 @@ function date_navigation_block_info() {
   );
   return $blocks;
 }
+
+/**
+ * Implements hook_block_view().
+ */
+function date_navigation_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'date_navigation':
+      $archive = _date_navigation_get_archive_tree();
+      // If there aren't any blog posts, hide the block.
+      if (empty($archive)) {
+        return;
+      }
+
+      $block = array(
+        'subject' => t('Archive'),
+        'content' => array(
+          'show_all_link' => l(t('All blog posts'), 'articles'),
+          'archive' => $archive,
+          '#theme' => 'date_navigation_archive',
+          '#cache' => DRUPAL_CACHE_PER_PAGE | DRUPAL_CACHE_PER_USER,
+          ),
+        ),
+      );
+  }
+  return $block;
+}
