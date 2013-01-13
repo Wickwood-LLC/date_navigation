@@ -68,3 +68,17 @@ function date_navigation_theme() {
     ),
   );
 }
+
+/**
+ * Implements hook_block_info().
+ */
+function date_navigation_block_info() {
+  $blocks['date_navigation'] = array(
+    'info' => t('Date navigation'),
+    // The block displays a navigation menu, which may have active menu-items.
+    // The active menu-items will change per page, and the accessible blog
+    // posts may change per user, depending on permissions.
+    'cache' => DRUPAL_CACHE_PER_PAGE | DRUPAL_CACHE_PER_USER,
+  );
+  return $blocks;
+}
