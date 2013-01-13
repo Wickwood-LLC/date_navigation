@@ -7,6 +7,33 @@
  * The idea is to mimic the date navigation of a WordPress-style blog.
  * This module is based largely on the WP_Blog module, but strives to be more flexible.
  */
+ 
+/**
+ * Implements hook_help().
+ */
+function date_navigation_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#date_navigation':
+      $output = '';
+      $output .= t('The Date Navigation module provides a custimizable block of navigation to nodes based on their creation date, changed date, or publication date if the Publication Date module is enabled.  The idea is to mimic the date navigation of a WordPress-style blog. The idea is to mimic the date navigation of a WordPress-style blog. This module is based largely on the <a href="@url">WP_Blog module</a>, but strives to be more flexible.', array('@url' => url('http://drupal.org/project/wp_blog')));
+      $output .= t('The major difference with this module from the <a href="@url">WP_Blog module</a> is that this module does not create a unique content type, i.e. WP blog post (Machine name: wp_blog).', array('@url' => url('http://drupal.org/project/wp_blog')));
+      $output .= t('This module does provide:');
+      $output .= '<ul>';
+      $output .= '<li>' . t('A default view of article pages that can be browsed by year, month or day. For example: !example_urls.', array('!example_urls' => "/articles<br />\n/articles/2010<br />\n/articles/2010/02<br />\n/articles/2010/02/20")) . '</li>';
+      $output .= '<li>' . t('A date navigation menu which gives links to the years/months/days where content is published, and a count of the number of blog posts for each year/month/day.') . '</li>';
+      $output .= '</ul>';
+      $output .= t('The other major difference with this module has from the <a href="@url">WP_Blog module</a> is that the above URLs are customizable.', array('@url' => url('http://drupal.org/project/wp_blog')));
+
+      $output .= '<h2>' . t('Recommended modules') . '</h2>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('The <a href="@publication_date_module_url">Publication Date module</a> adds to each node a field containing the date when it has been published.  Without this, the only dates available are the creation date and the
+update date.  But in reality for most users, the important date is when the content was published.  So we highly recommend using this module.', array('@publication_date_url' => 'http://drupal.org/project/publication_date')) . '</li>';
+      $output .= '</ul>';
+
+      return $output;
+  }
+}
+
 
 /*
  * Implements hook_permission
