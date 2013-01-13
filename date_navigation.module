@@ -56,3 +56,15 @@ function date_navigation_views_api() {
   );
 }
 
+/**
+ * Implements hook_theme().
+ */
+function date_navigation_theme() {
+  return array(
+    // date_navigation_archive is the sidebar menu which displays the date navigation.
+    'date_navigation_archive' => array(
+      'render element' => 'element',
+      'file' => 'date_navigation.theme.inc',
+    ),
+  );
+}
