@@ -1,1 +1,14 @@
 <?php
+
+/*
+ * Implements hook_permission
+ */
+
+function date_navigation_permission() {
+  return array(
+    'administer date navigation' => array(
+      'title' => t('Administer date navigation'), 
+      'description' => t('Perform administration tasks for the Date Navigation module.'),
+    ),
+  );
+}
