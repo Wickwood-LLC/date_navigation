@@ -107,7 +107,6 @@ function date_navigation_block_view($delta = '') {
           'archive' => $archive,
           '#theme' => 'date_navigation_archive',
           '#cache' => DRUPAL_CACHE_PER_PAGE | DRUPAL_CACHE_PER_USER,
-          ),
         ),
       );
   }
