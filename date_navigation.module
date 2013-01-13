@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Date Navigation provides a custimizable block of navigation to nodes based on their
+ * creation date, changed date, or publication date if the Publication Date module is enabled.
+ * The idea is to mimic the date navigation of a WordPress-style blog.
+ * This module is based largely on the WP_Blog module, but strives to be more flexible.
+ */
+
 /*
  * Implements hook_permission
  */
@@ -12,3 +20,4 @@ function date_navigation_permission() {
     ),
   );
 }
+
