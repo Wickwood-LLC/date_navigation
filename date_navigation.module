@@ -95,7 +95,7 @@ function date_navigation_block_view($delta = '') {
   switch ($delta) {
     case 'date_navigation':
       $archive = _date_navigation_get_archive_tree();
-      // If there aren't any blog posts, hide the block.
+      // If there aren't any posts, hide the block.
       if (empty($archive)) {
         return;
       }
