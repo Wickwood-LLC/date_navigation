@@ -13,7 +13,7 @@ function theme_date_navigation_archive($element) {
   $items[] = $element['element']['show_all_link'];
 
   $archive = $element['element']['archive'];
-  dsm($archive);
+  
   foreach ($archive as $year) {
     $item = array(
       'data' => t('!year [@count]', array('!year' => l($year['text'], $year['url']), '@count' => $year['count'])),
