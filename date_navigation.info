@@ -6,3 +6,5 @@ version = 1.x-dev-wwm
 
 configure = admin/structure/date_navigation/settings
 
+files[] = date_navigation.theme.inc
+
