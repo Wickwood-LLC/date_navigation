@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Contains install and uninstall functions for Date Navigation module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function date_navigation_uninstall() {
+  variable_del('date_navigation_block_types');
+  variable_del('date_navigation_taxonomy_items');
+  variable_del('date_navigation_items');
+  variable_del('date_navigation_taxonomy_options');
+  variable_del('date_navigation_custom_selection');
+  variable_del('date_navigation_jquerymenu');
+}
