@@ -9,7 +9,7 @@
  */
 function date_navigation_views_query_alter(&$view, &$query) {
   $driver = db_driver();
-  if ($view->name == 'simple_node_archive' && !empty($query->where[0]['conditions'])) {
+  if ($view->name == 'date_navigation' && !empty($query->where[0]['conditions'])) {
     foreach ($query->where[0]['conditions'] as $key => $condition) {
 
       // Alter views query for SQLite Database.
