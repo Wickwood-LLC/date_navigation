@@ -112,7 +112,7 @@ function date_navigation_views_default_views() {
   }
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'sna';
+  $handler->display->display_options['path'] = 'articles';
 
   $views[$view->name] = $view;
   return $views;
