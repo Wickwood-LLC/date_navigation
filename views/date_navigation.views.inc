@@ -42,11 +42,11 @@ function date_navigation_views_query_alter(&$view, &$query) {
     $arg = explode('/', $_GET['q']);
     $year = $arg[1];
     $month = '';
-    $request_uri = 'articles/' . $arg[1] . '/' . $arg[2] . '/' . $arg[3] . '/' . $arg[4];
+    $request_uri = 'articles/' . $arg[1] . '/' . $arg[2] . '/' . $arg[3];
     $view->build_info['breadcrumb'] = array($request_uri => $year);
     if (is_numeric($arg[2]) && $arg[2] != '00') {
       $month = date('F', mktime(0, 0, 0, $arg[2]));
-      $year_url = 'articles/' . $arg[1] . '/00/' . $arg[3] . '/' . $arg[4];
+      $year_url = 'articles/' . $arg[1] . '/00/' . $arg[3];
       $view->build_info['breadcrumb'] = array($year_url => $arg[1], $request_uri => $month);
     }
 
@@ -66,6 +66,6 @@ function date_navigation_views_query_alter(&$view, &$query) {
  */
 function date_navigation_views_default_views_alter(&$views) {
   if (isset($views['date_navigation'])) {
-    dsm('date_navigation_views_default_views_alter has been called');
+    //dsm('date_navigation_views_default_views_alter has been called');
   }
 }
