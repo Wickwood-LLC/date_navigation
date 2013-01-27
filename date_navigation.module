@@ -76,6 +76,7 @@ function date_navigation_menu() {
 function date_navigation_views_api() {
   return array(
     'api' => 3,
+    'path' => drupal_get_path('module', 'date_navigation') . '/views'
   );
 }
 
