@@ -116,14 +116,17 @@ function date_navigation_block_view($delta = '') {
   $block = array();
   $archive_items = variable_get('date_navigation_items', 0);
   $arg = explode('/', $_GET['q']);
-  $year = $arg[0] == 'sna' && $arg[1] != '' && is_numeric($arg[1]) ? $arg[1] : '';
-  $month = $arg[0] == 'sna' && $arg[2] != '00' && is_numeric($arg[2]) ? date('F', mktime(0, 0, 0, $arg[2])) : '';
+  dsm($_GET['q']);
+  dsm($arg	);
+  
+  $year = $arg[0] == 'articles' && $arg[1] != '' && is_numeric($arg[1]) ? $arg[1] : '';
+  $month = $arg[0] == 'articles' && $arg[2] != '00' && is_numeric($arg[2]) ? date('F', mktime(0, 0, 0, $arg[2])) : '';
 
   // Node archive.
   $block_types = variable_get('date_navigation_block_types', array('page'));
   foreach ($block_types as $type => $value) {
     if ($delta == ('dn-node-' . $value)) {
-      $block['subject'] = t('Date Nav Node type @name', array('@name' => $value));
+      $block['subject'] = t('@names by Date', array('@name' => ucwords($value)));
       $block['content'] = theme('date_navigation_node', array(
         'value' => $value,
         'archive_items' => $archive_items,
@@ -137,7 +140,7 @@ function date_navigation_block_view($delta = '') {
   $taxonomy_archive = variable_get('date_navigation_taxonomy_items', array());
   foreach ($taxonomy_archive as $type => $value) {
     if ($delta == ('dn-taxo-' . $value)) {
-      $block['subject'] = t('Date Nav Taxonomy type @name', array('@name' => $taxonomy_options[$value]));
+      $block['subject'] = t('@names by Date', array('@name' => ucwords($taxonomy_options[$value])));
       $block['content'] = theme('date_navigation_taxonomy', array(
         'value' => $value,
         'archive_items' => $archive_items,
@@ -288,13 +291,13 @@ function _date_navigation_resultset($value, $type) {
     $subquery->condition('tid', $value, 'IN');
 
     $query = db_select('node');
-    if (module_exists('publication_date')) {
-     	$query->join('publication_date', 'pd', 'n.nid = pd.nid'); //JOIN node with publication_date
-     	$query->fields('n', array('nid', 'type', 'title'))//SELECT the fields from node table
-     	->fields('pd', array('published_at')); //SELECT the fields from publication_date table
-     } else {
+//    if (module_exists('publication_date')) {
+//      	$query->join('publication_date', 'pd', 'n.nid = pd.nid'); //JOIN node with publication_date
+//      	$query->fields('n', array('nid', 'type', 'title'))//SELECT the fields from node table
+//      	->fields('pd', array('published_at')); //SELECT the fields from publication_date table
+//      } else {
       $query->fields('node', array('nid', 'type', 'title', 'created'));
-  	}
+//  	}
     $query->condition('status', 1);
     $query->condition('nid', $subquery, 'IN');
     $query->condition('language', $lang);
@@ -381,11 +384,11 @@ function _date_navigation_archivehtml($results, $archive_items, $display_year, $
   // Need to find active block.
   $arg = explode('/', $_GET['q']);
   $active_block = FALSE;
-  if ($arg[0] == 'sna' && $block_type == 'node' && $arg[3] == $view_node_arg && $arg[4] == 'all') {
+  if ($arg[0] == 'articles' && $block_type == 'node' && $arg[3] == $view_node_arg && $arg[4] == 'all') {
     $active_block = TRUE;
   }
   $arg[4] = isset($arg[4]) ? str_replace(' ', '+', $arg[4]) : 0;
-  if ($arg[0] == 'sna' && $block_type == 'terms' && $arg[4] == $view_taxo_arg) {
+  if ($arg[0] == 'articles' && $block_type == 'terms' && $arg[4] == $view_taxo_arg) {
     $active_block = TRUE;
   }
 
@@ -431,7 +434,7 @@ function _date_navigation_archivehtml($results, $archive_items, $display_year, $
     foreach ($results as $year => $months) {
       $year_value = explode(' ', $year);
       // $year_value[0] contain year value and $year_value[1] conatian count.
-      $year_url = 'sna/' . $year_value[0] . '/00/' . $view_node_arg . '/' . $view_taxo_arg;
+      $year_url = $view_node_arg . 's/' . $year_value[0] . '/00/' . '/' . $view_taxo_arg;
 
       // Check for active year branch and block.
       $expand_year = $display_year == $year_value[0] && $active_block ? TRUE : FALSE;
@@ -458,7 +461,7 @@ function _date_navigation_archivehtml($results, $archive_items, $display_year, $
         foreach ($months as $month => $nodes) {
           $month_value = explode(' ', $month);
           // $month_value[0] contain month and $month_value[1] conatian count.
-          $month_url = 'sna/' . $year_value[0] . '/' . date('m', strtotime($month_value[0], '1')) . '/' . $view_node_arg . '/' . $view_taxo_arg;
+          $month_url = $view_node_arg .'s/' . $year_value[0] . '/' . date('m', strtotime($month_value[0], '1')) . '/' . '/' . $view_taxo_arg;
 
           // Check for active month and block.
           $expand_month = $display_year == $year_value[0] && $display_month == $month_value[0] && $active_block ? TRUE : FALSE;
