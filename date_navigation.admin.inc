@@ -12,11 +12,14 @@ function date_navigation_admin_settings() {
   // Get an array of node types with internal names as keys and
   // array('page' => ’Basic Page, 'article' => 'Articles')
   $types = node_type_get_types();
-  $options['all'] = t('All type');
-  $options['custom'] = t('Custom type');
+  $options['all'] = t('All Node Types');
+  $options['custom'] = t('Custom Type');
   foreach ($types as $type) {
     $options[$type->type] = $type->name;
   }
+  
+  // Get an array of taxonomy vocabularies 
+  // and terms used in those taxonomies
   $vocabularies = taxonomy_get_vocabularies();
   $taxonomy_options = array();
   $taxonomy_options_var = array();
@@ -36,10 +39,10 @@ function date_navigation_admin_settings() {
 
   $form['date_navigation_block_types'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Type of Date Navigation blocks to be created.'),
+    '#title' => t('Select the Node Types to create Date Navigation blocks for.'),
     '#options' => $options,
-    '#default_value' => variable_get('date_navigation_block_types', array('page')),
-    '#description' => t('For each checked item an archive block will be created and listed in Administration » Structure » Blocks.'),
+    '#default_value' => variable_get('date_navigation_block_types', array('article')),
+    '#description' => t('A Date Navigation block will be created and listed in Administration » Structure » Blocks for each checked item.'),
   );
 
   unset($options['all']);
@@ -47,40 +50,46 @@ function date_navigation_admin_settings() {
 
   $form['date_navigation_custom_selection'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Content types that inclueded in Custom Archive Block type'),
+    '#title' => t('Select the Content Types to be included in that custom block.'),
     '#options' => $options,
     '#default_value' => variable_get('date_navigation_custom_selection', array()),
-    '#description' => t('if "Custom type" is checked then select the content types should be included.'),
+    '#description' => t('If you selected to create a Custom Date Navigation Block type above, select the Content Types to be included in that custom block.'),
   );
+  
   $form['date_navigation_taxonomy_items'] = array(
     '#type' => 'select',
-    '#title' => t('Create archive block based on taxonomy'),
+    '#title' => t('Create a Date Navigation Block based on taxonomy.'),
     '#options' => $taxonomy_options,
     '#default_value' => variable_get('date_navigation_taxonomy_items', array()),
-    '#description' => t('Select taxnomy term for which an archvie block will be created.'),
+    '#description' => t('Select taxnomy terms for which a Date Navigation Block should be created.'),
     '#multiple' => TRUE,
     '#attributes' => array('style' => 'height: 200px; width: 205px;'),
   );
+  
   $form['date_navigation_items'] = array(
     '#type' => 'select',
     '#title' => t('Number of items'),
     '#options' => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
     '#default_value' => variable_get('date_navigation_items', 0),
-    '#description' => t('Select the number of node will display in expanded archive. select 0 to show unlimited.'),
+    '#description' => t('Select the number of nodes to display in an expanded archive. Select 0 to show an unlimited number of nodes.'),
   );
 
-  $disabled_jquerymenu_option = TRUE;
+  $disabled_jquerymenu = TRUE;
+  $default_jquerymenu_option = t('The <a href="@jquerymenu_url" target="_blank">Jquery Menu module </a> is not installed and/or enabled.', array('@jquerymenu_url' => url('http://drupal.org/project/jquerymenu'),));
+  $default_jquerymenu_option_value = FALSE;
   if (module_exists('jquerymenu')) {
-    $disabled_jquerymenu_option = FALSE;
+    $disabled_jquerymenu = FALSE;
+    $default_jquerymenu_option = t('Check this box if you want to use <a href="@jquerymenu_url" target="_blank">Jquery Menu module </a> to theme Date Navigation blocks.  We turn it on by default if when the module is enabled because we likes it. :-)', array('@jquerymenu_url' => url('http://drupal.org/project/jquerymenu'),));
+    $default_jquerymenu_option_value = TRUE;
   }
 
   $form['date_navigation_jquerymenu'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Theme archive blocks using Jquery Menu module'),
-    '#options' => array(1 => 'check this box if you want to use <a href="http://drupal.org/project/jquerymenu" target="_blank">Jquerymenu module </a> to theme archive blocks.'),
-    '#default_value' => variable_get('date_navigation_jquerymenu', array()),
-    '#disabled' => $disabled_jquerymenu_option,
+    '#title' => t('Theme Date Navigation blocks using Jquery Menu module'),
+    '#options' => array(1 => $default_jquerymenu_option),
+    '#default_value' => variable_get('date_navigation_jquerymenu', array($default_jquerymenu_option_value)),
+    '#disabled' => $disabled_jquerymenu,
   );
-
+  
   return system_settings_form($form);
 }
