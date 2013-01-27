@@ -27,12 +27,13 @@ function date_navigation_help($path, $arg) {
       $output .= '<li>' . t('A default view of article pages that can be browsed by year, month or day. For example: !example_urls.', array('!example_urls' => "<br />\n/articles<br />\n/articles/2013<br />\n/articles/2013/01<br />\n/articles/2013/01/13")) . '</li>';
       $output .= '<li>' . t('A date navigation menu which links to content broken down by years, months, and days with a count of the number of blog posts for each.') . '</li>';
       $output .= '</ul>';
-      $output .= t('The other major difference with this module has from the <a href="@url">WP_Blog</a> and <a href="@snab_url">Simple Node Archive Blocks</a> modules are that the above URLs are customizable.', aarray('@wp_blog_url' => url('http://drupal.org/project/wp_blog'),'@snab_url' => url('http://drupal.org/project/sna_blocks'),));
+      $output .= t('The other major difference with this module has from the <a href="@url">WP_Blog</a> and <a href="@snab_url">Simple Node Archive Blocks</a> modules are that the above URLs are customizable.', array('@wp_blog_url' => url('http://drupal.org/project/wp_blog'),'@snab_url' => url('http://drupal.org/project/sna_blocks'),));
 
       $output .= '<h2>' . t('Recommended modules') . '</h2>';
       $output .= '<ul>';
       $output .= '<li>' . t('The <a href="@publication_date_url">Publication Date module</a> adds to each node a field containing the date when it has been published.  Without this, the only dates available are the creation date and the
 update date.  But in reality for most users, the important date is when the content was published.  So we highly recommend using this module.', array('@publication_date_url' => url('http://drupal.org/project/publication_date'),)) . '</li>';
+      $output .= '<li>' . t('The <a href="@jquerymenu_url">Publication Date module</a> provides simple, cross browser compatible jquery to transform your multilevel menus into click and expand menus.  So we also highly recommend using this module as well.', array('@publication_date_url' => url('http://drupal.org/project/jquerymenu'),)) . '</li>';
       $output .= '</ul>';
 
       return $output;
@@ -50,6 +51,23 @@ function date_navigation_permission() {
       'description' => t('Perform administration tasks for the Date Navigation module.'),
     ),
   );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function date_navigation_menu() {
+  $items['admin/config/user-interface/date-navigation/settings'] = array(
+    'title' => 'Date Navigation Settings',
+    'description' => 'Configure Entities for Date Navigation.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('date_navigation_admin_settings'),
+    'access arguments' => array('administer date navigation'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'date_navigation.admin.inc',
+  );
+
+  return $items;
 }
 
 /**
