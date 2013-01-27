@@ -7,7 +7,7 @@
 /**
  * Implements hook_views_default_views().
  */
-function sna_blocks_views_default_views() {
+function date_navigation_views_default_views() {
   $view = new view();
   $view->name = 'simple_node_archive';
   $view->description = '';

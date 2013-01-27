@@ -7,7 +7,7 @@
 /**
  * Implements hook_views_query_alter().
  */
-function sna_blocks_views_query_alter(&$view, &$query) {
+function date_navigation_views_query_alter(&$view, &$query) {
   $driver = db_driver();
   if ($view->name == 'simple_node_archive' && !empty($query->where[0]['conditions'])) {
     foreach ($query->where[0]['conditions'] as $key => $condition) {
@@ -25,7 +25,7 @@ function sna_blocks_views_query_alter(&$view, &$query) {
       // Alter views query for custom node archive block.
       if (isset($view->args['2']) && $view->args['2'] == 'custom' && $condition['value'] == 'custom') {
         $query->where[0]['conditions'][$key]['operator'] = 'in';
-        $custom_selection = variable_get('sna_blocks_custom_selection', array('page'));
+        $custom_selection = variable_get('date_navigation_custom_selection', array('page'));
         foreach ($custom_selection as $custom_key => $value) {
           if ($value != '0') {
             $values[] = $value;

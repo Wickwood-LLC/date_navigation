@@ -82,9 +82,9 @@ function date_navigation_views_api() {
 /**
  * Implements hook_block_info().
  */
-function sna_blocks_block_info() {
+function date_navigation_block_info() {
   // Node archive.
-  $block_types = variable_get('sna_blocks_block_types', array('page'));
+  $block_types = variable_get('date_navigation_block_types', array('page'));
   foreach ($block_types as $type => $value) {
     // Check the selected block types.
     if ($value != '0') {
@@ -94,8 +94,8 @@ function sna_blocks_block_info() {
     }
   }
   // Taxonomy archive.
-  $taxonomy_options = variable_get('sna_blocks_taxonomy_options', array());
-  $taxonomy_archive = variable_get('sna_blocks_taxonomy_items', array());
+  $taxonomy_options = variable_get('date_navigation_taxonomy_options', array());
+  $taxonomy_archive = variable_get('date_navigation_taxonomy_items', array());
   foreach ($taxonomy_archive as $type => $value) {
     // Check the selected block types.
     if ($value != '0') {
@@ -111,19 +111,19 @@ function sna_blocks_block_info() {
 /**
  * Implements hook_block_view().
  */
-function sna_blocks_block_view($delta = '') {
+function date_navigation_block_view($delta = '') {
   $block = array();
-  $archive_items = variable_get('sna_blocks_items', 0);
+  $archive_items = variable_get('date_navigation_items', 0);
   $arg = explode('/', $_GET['q']);
   $year = $arg[0] == 'sna' && $arg[1] != '' && is_numeric($arg[1]) ? $arg[1] : '';
   $month = $arg[0] == 'sna' && $arg[2] != '00' && is_numeric($arg[2]) ? date('F', mktime(0, 0, 0, $arg[2])) : '';
 
   // Node archive.
-  $block_types = variable_get('sna_blocks_block_types', array('page'));
+  $block_types = variable_get('date_navigation_block_types', array('page'));
   foreach ($block_types as $type => $value) {
     if ($delta == ('sna-node-' . $value)) {
       $block['subject'] = t('SNA Node type @name', array('@name' => $value));
-      $block['content'] = theme('sna_blocks_node', array(
+      $block['content'] = theme('date_navigation_node', array(
         'value' => $value,
         'archive_items' => $archive_items,
         'year' => $year,
@@ -132,12 +132,12 @@ function sna_blocks_block_view($delta = '') {
     }
   }
   // Taxonomy Archive.
-  $taxonomy_options = variable_get('sna_blocks_taxonomy_options', array());
-  $taxonomy_archive = variable_get('sna_blocks_taxonomy_items', array());
+  $taxonomy_options = variable_get('date_navigation_taxonomy_options', array());
+  $taxonomy_archive = variable_get('date_navigation_taxonomy_items', array());
   foreach ($taxonomy_archive as $type => $value) {
     if ($delta == ('sna-taxo-' . $value)) {
       $block['subject'] = t('SNA Taxonomy type @name', array('@name' => $taxonomy_options[$value]));
-      $block['content'] = theme('sna_blocks_taxonomy', array(
+      $block['content'] = theme('date_navigation_taxonomy', array(
         'value' => $value,
         'archive_items' => $archive_items,
         'year' => $year,
@@ -152,9 +152,9 @@ function sna_blocks_block_view($delta = '') {
 /**
  * Implements hook_theme().
  */
-function sna_blocks_theme() {
+function date_navigation_theme() {
   return array(
-    'sna_blocks_node' => array(
+    'date_navigation_node' => array(
       'variables' => array(
         'value' => NULL,
         'archive_items' => NULL,
@@ -162,7 +162,7 @@ function sna_blocks_theme() {
         'month' => NULL,
       ),
     ),
-    'sna_blocks_taxonomy' => array(
+    'date_navigation_taxonomy' => array(
       'variables' => array(
         'value' => NULL,
         'archive_items' => NULL,
@@ -176,7 +176,7 @@ function sna_blocks_theme() {
 /**
  * Returns a chronological archive block for node type.
  */
-function theme_sna_blocks_node($variables) {
+function theme_date_navigation_node($variables) {
   $node_type = $variables['value'];
   $archive_items = $variables['archive_items'];
   $display_year = $variables['year'];
@@ -184,8 +184,8 @@ function theme_sna_blocks_node($variables) {
 
   // Get an associate array contain the results.
   // Array([year(counter)] => Array([month(counter)] => Array([nid] => title)))
-  $results = _sna_blocks_resultset($node_type, 'node');
-  $html = _sna_blocks_archivehtml($results, $archive_items, $display_year, $display_month, $node_type, 'node');
+  $results = _date_navigation_resultset($node_type, 'node');
+  $html = _date_navigation_archivehtml($results, $archive_items, $display_year, $display_month, $node_type, 'node');
 
   return $html;
 }
@@ -193,12 +193,12 @@ function theme_sna_blocks_node($variables) {
 /**
  * Returns a chronological archive block for node Vocabulary or Term.
  */
-function theme_sna_blocks_taxonomy($variables) {
+function theme_date_navigation_taxonomy($variables) {
   $taxonomy_value = $variables['value'];
   $archive_items = $variables['archive_items'];
   $display_year = $variables['year'];
   $display_month = $variables['month'];
-  $taxonomy_options = variable_get('sna_blocks_taxonomy_options', array());
+  $taxonomy_options = variable_get('date_navigation_taxonomy_options', array());
   if (empty($taxonomy_options)) {
     return t('No Content Posted.');
   }
@@ -219,8 +219,8 @@ function theme_sna_blocks_taxonomy($variables) {
     $tids[$taxonomy_value] = $taxonomy_value;
   }
 
-  $results = _sna_blocks_resultset($tids, 'terms');
-  $html = _sna_blocks_archivehtml($results, $archive_items, $display_year, $display_month, $tids, 'terms');
+  $results = _date_navigation_resultset($tids, 'terms');
+  $html = _date_navigation_archivehtml($results, $archive_items, $display_year, $display_month, $tids, 'terms');
 
   return $html;
 }
@@ -237,7 +237,7 @@ function theme_sna_blocks_taxonomy($variables) {
  * @return array
  *   An associate arrry.
  */
-function _sna_blocks_resultset($value, $type) {
+function _date_navigation_resultset($value, $type) {
   global $language;
   $archive = array();
   // Select current user's language.
@@ -259,7 +259,7 @@ function _sna_blocks_resultset($value, $type) {
   	}
     $query->condition('status', 1);
     if ($value == 'custom') {
-      $custom_selection = variable_get('sna_blocks_custom_selection', array('page'));
+      $custom_selection = variable_get('date_navigation_custom_selection', array('page'));
       foreach ($custom_selection as $k => $v) {
         if ($v != '0') {
           $condition[] = $v;
@@ -354,12 +354,12 @@ function _sna_blocks_resultset($value, $type) {
  * @return string
  *   An HTML string.
  */
-function _sna_blocks_archivehtml($results, $archive_items, $display_year, $display_month, $values, $block_type) {
+function _date_navigation_archivehtml($results, $archive_items, $display_year, $display_month, $values, $block_type) {
   $output = t('No Content Posted.');
   $view_taxo_arg = 'all';
   $view_node_arg = 'all';
 
-  $use_jquerymenu = variable_get('sna_blocks_jquerymenu', 0);
+  $use_jquerymenu = variable_get('date_navigation_jquerymenu', 0);
   if ($use_jquerymenu) {
     $use_jquerymenu = $use_jquerymenu[1];
   }
@@ -401,7 +401,7 @@ function _sna_blocks_archivehtml($results, $archive_items, $display_year, $displ
         $active_block = TRUE;
       }
       elseif ($values == 'custom') {
-        $node_types = variable_get('sna_blocks_custom_selection', array('page'));
+        $node_types = variable_get('date_navigation_custom_selection', array('page'));
         if (isset($node_types[$node->type]) && $node_types[$node->type] != '0') {
           $active_block = TRUE;
         }
@@ -411,7 +411,7 @@ function _sna_blocks_archivehtml($results, $archive_items, $display_year, $displ
       }
     }
     elseif ($block_type == 'terms') {
-      $terms = _sna_blocks_nodeterms($node->nid);
+      $terms = _date_navigation_nodeterms($node->nid);
       if (!empty($terms)) {
         foreach ($terms as $key => $value) {
           if (in_array($key, $values)) {
@@ -558,7 +558,7 @@ function _sna_blocks_archivehtml($results, $archive_items, $display_year, $displ
  * @return array
  *   Array cotaining the list of terms.
  */
-function _sna_blocks_nodeterms($nid) {
+function _date_navigation_nodeterms($nid) {
   $terms = array();
   $query = db_select('node', 'N');
   $query->addJoin('INNER', 'taxonomy_index', 'T', 'N.nid = T.nid');
