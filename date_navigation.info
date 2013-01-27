@@ -6,6 +6,5 @@ version = 1.x-dev-wwm
 package = User Interface
 configure = admin/config/user-interface/date-navigation/settings
 
-files[] = date_navigation.theme.inc
 files[] = date_navigation.admin.inc
 
