@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Default views for simple_node_archive module.
+ * Default views for date_navigation module.
  */
 
 /**
