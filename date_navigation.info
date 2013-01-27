@@ -9,4 +9,6 @@ configure = admin/config/user-interface/date-navigation/settings
 dependencies[] = views
 
 files[] = date_navigation.admin.inc
+files[] = date_navigation.views.inc
+files[] = date_navigation.views_default.inc
 
