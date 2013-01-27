@@ -88,8 +88,8 @@ function date_navigation_block_info() {
   foreach ($block_types as $type => $value) {
     // Check the selected block types.
     if ($value != '0') {
-      $blocks['sna-node-' . $value] = array(
-        'info' => t('Simple Node Archive - Node : @name', array('@name' => $value)),
+      $blocks['dn-node-' . $value] = array(
+        'info' => t('Date Navigation - Node : @name', array('@name' => $value)),
       );
     }
   }
@@ -99,8 +99,8 @@ function date_navigation_block_info() {
   foreach ($taxonomy_archive as $type => $value) {
     // Check the selected block types.
     if ($value != '0') {
-      $blocks['sna-taxo-' . $value] = array(
-        'info' => t('Simple Node Archive - Taxonomy : @name', array('@name' => $taxonomy_options[$value])),
+      $blocks['dn-taxo-' . $value] = array(
+        'info' => t('Date Navigation - Taxonomy : @name', array('@name' => $taxonomy_options[$value])),
       );
     }
   }
@@ -121,8 +121,8 @@ function date_navigation_block_view($delta = '') {
   // Node archive.
   $block_types = variable_get('date_navigation_block_types', array('page'));
   foreach ($block_types as $type => $value) {
-    if ($delta == ('sna-node-' . $value)) {
-      $block['subject'] = t('SNA Node type @name', array('@name' => $value));
+    if ($delta == ('dn-node-' . $value)) {
+      $block['subject'] = t('Date Nav Node type @name', array('@name' => $value));
       $block['content'] = theme('date_navigation_node', array(
         'value' => $value,
         'archive_items' => $archive_items,
@@ -135,8 +135,8 @@ function date_navigation_block_view($delta = '') {
   $taxonomy_options = variable_get('date_navigation_taxonomy_options', array());
   $taxonomy_archive = variable_get('date_navigation_taxonomy_items', array());
   foreach ($taxonomy_archive as $type => $value) {
-    if ($delta == ('sna-taxo-' . $value)) {
-      $block['subject'] = t('SNA Taxonomy type @name', array('@name' => $taxonomy_options[$value]));
+    if ($delta == ('dn-taxo-' . $value)) {
+      $block['subject'] = t('Date Nav Taxonomy type @name', array('@name' => $taxonomy_options[$value]));
       $block['content'] = theme('date_navigation_taxonomy', array(
         'value' => $value,
         'archive_items' => $archive_items,
