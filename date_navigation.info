@@ -6,5 +6,7 @@ version = 1.x-dev-wwm
 package = User Interface
 configure = admin/config/user-interface/date-navigation/settings
 
+dependencies[] = views
+
 files[] = date_navigation.admin.inc
 
