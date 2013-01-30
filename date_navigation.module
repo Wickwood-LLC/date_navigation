@@ -306,14 +306,14 @@ function _date_navigation_resultset($value, $type) {
     $subquery->addField('tn', 'nid');
     $subquery->condition('tid', $value, 'IN');
 
-    $query = db_select('node');
-//    if (module_exists('publication_date')) {
-//      	$query->join('publication_date', 'pd', 'n.nid = pd.nid'); //JOIN node with publication_date
-//      	$query->fields('n', array('nid', 'type', 'title'))//SELECT the fields from node table
-//      	->fields('pd', array('published_at')); //SELECT the fields from publication_date table
-//      } else {
-      $query->fields('node', array('nid', 'type', 'title', 'created'));
-//  	}
+    $query = db_select('node','n');
+   if (module_exists('publication_date')) {
+     	$query->join('publication_date', 'pd', 'n.nid = pd.nid'); //JOIN node with publication_date
+     	$query->fields('n', array('nid', 'type', 'title'))//SELECT the fields from node table
+     	->fields('pd', array('published_at')); //SELECT the fields from publication_date table
+     } else {
+      $query->fields('n', array('nid', 'type', 'title', 'created'));
+  	}
     $query->condition('status', 1);
     $query->condition('nid', $subquery, 'IN');
     $query->condition('language', $lang);
