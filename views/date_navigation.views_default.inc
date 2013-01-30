@@ -28,12 +28,14 @@ function date_navigation_views_default_views() {
 	$handler->display->display_options['query']['type'] = 'views_query';
 	$handler->display->display_options['query']['options']['query_comment'] = FALSE;
 	$handler->display->display_options['exposed_form']['type'] = 'basic';
+	$handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
 	$handler->display->display_options['pager']['type'] = 'full';
 	$handler->display->display_options['pager']['options']['items_per_page'] = '10';
 	$handler->display->display_options['pager']['options']['offset'] = '0';
 	$handler->display->display_options['pager']['options']['id'] = '0';
 	$handler->display->display_options['pager']['options']['quantity'] = '9';
 	$handler->display->display_options['pager']['options']['expose']['items_per_page'] = TRUE;
+	$handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Number of items to show per page';
 	$handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = TRUE;
 	$handler->display->display_options['style_plugin'] = 'default';
 	$handler->display->display_options['row_plugin'] = 'node';
