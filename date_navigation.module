@@ -193,7 +193,7 @@ function date_navigation_theme() {
  * Returns a chronological navigation block for node type.
  */
 function theme_date_navigation_node($variables) {
-  $node_type = $variables['value'];
+  $node_type = $variables['node_type'];
   $num_items = $variables['num_items'];
   $display_year = $variables['year'];
   $display_month = $variables['month'];
@@ -210,7 +210,7 @@ function theme_date_navigation_node($variables) {
  * Returns a chronological navigation block for node Vocabulary or Term.
  */
 function theme_date_navigation_taxonomy($variables) {
-  $taxonomy_value = $variables['value'];
+  $taxonomy_value = $variables['taxonomy_value'];
   $num_items = $variables['num_items'];
   $display_year = $variables['year'];
   $display_month = $variables['month'];
@@ -371,12 +371,6 @@ function _date_navigation_resultset($value, $type) {
  *   An HTML string.
  */
 function _date_navigation_html($results, $num_items, $display_year, $display_month, $values, $block_type) {
-//   dsm($results);
-//   dsm($num_items);
-//   dsm($display_year);
-//   dsm($display_month);
-//   dsm($values);
-//   dsm($block_type);
   
   $output = t('No Content Posted.');
   $view_taxo_arg = 'all';
