@@ -114,7 +114,7 @@ function date_navigation_block_info() {
  */
 function date_navigation_block_view($delta = '') {
   $block = array();
-  $archive_items = variable_get('date_navigation_items', 0);
+  $num_items = variable_get('date_navigation_num_items', 0);
   $arg = explode('/', $_GET['q']);
   $year = $arg[0] == 'articles' && $arg[1] != '' && is_numeric($arg[1]) ? $arg[1] : '';
   $month = $arg[0] == 'articles' && $arg[2] != '00' && is_numeric($arg[2]) ? date('F', mktime(0, 0, 0, $arg[2])) : '';
@@ -126,7 +126,7 @@ function date_navigation_block_view($delta = '') {
       $block['subject'] = t('@names by Date', array('@name' => ucwords($value)));
       $block['content'] = theme('date_navigation_node', array(
         'value' => $value,
-        'archive_items' => $archive_items,
+        'num_items' => $num_items,
         'year' => $year,
         'month' => $month,
         ));
@@ -140,7 +140,7 @@ function date_navigation_block_view($delta = '') {
       $block['subject'] = t('@names by Date', array('@name' => ucwords($taxonomy_options[$value])));
       $block['content'] = theme('date_navigation_taxonomy', array(
         'value' => $value,
-        'archive_items' => $archive_items,
+        'num_items' => $num_items,
         'year' => $year,
         'month' => $month,
         ));
@@ -158,7 +158,7 @@ function date_navigation_theme() {
     'date_navigation_node' => array(
       'variables' => array(
         'value' => NULL,
-        'archive_items' => NULL,
+        'num_items' => NULL,
         'year' => NULL,
         'month' => NULL,
       ),
@@ -166,7 +166,7 @@ function date_navigation_theme() {
     'date_navigation_taxonomy' => array(
       'variables' => array(
         'value' => NULL,
-        'archive_items' => NULL,
+        'num_items' => NULL,
         'year' => NULL,
         'month' => NULL,
       ),
@@ -179,14 +179,14 @@ function date_navigation_theme() {
  */
 function theme_date_navigation_node($variables) {
   $node_type = $variables['value'];
-  $archive_items = $variables['archive_items'];
+  $num_items = $variables['num_items'];
   $display_year = $variables['year'];
   $display_month = $variables['month'];
 
   // Get an associate array contain the results.
   // Array([year(counter)] => Array([month(counter)] => Array([nid] => title)))
   $results = _date_navigation_resultset($node_type, 'node');
-  $html = _date_navigation_archivehtml($results, $archive_items, $display_year, $display_month, $node_type, 'node');
+  $html = _date_navigation_archivehtml($results, $num_items, $display_year, $display_month, $node_type, 'node');
 
   return $html;
 }
@@ -196,7 +196,7 @@ function theme_date_navigation_node($variables) {
  */
 function theme_date_navigation_taxonomy($variables) {
   $taxonomy_value = $variables['value'];
-  $archive_items = $variables['archive_items'];
+  $num_items = $variables['num_items'];
   $display_year = $variables['year'];
   $display_month = $variables['month'];
   $taxonomy_options = variable_get('date_navigation_taxonomy_options', array());
@@ -221,7 +221,7 @@ function theme_date_navigation_taxonomy($variables) {
   }
 
   $results = _date_navigation_resultset($tids, 'terms');
-  $html = _date_navigation_archivehtml($results, $archive_items, $display_year, $display_month, $tids, 'terms');
+  $html = _date_navigation_archivehtml($results, $num_items, $display_year, $display_month, $tids, 'terms');
 
   return $html;
 }
@@ -343,7 +343,7 @@ function _date_navigation_resultset($value, $type) {
  * @param array $results
  *   Associate array in format
  *   Array([year(counter)] => Array([month(counter)] => Array([nid] => title)))
- * @param string $archive_items
+ * @param string $num_items
  *   Number node to be shown in expanded archive.
  * @param string $display_year
  *   Which year to be shown in archive.
@@ -355,7 +355,14 @@ function _date_navigation_resultset($value, $type) {
  * @return string
  *   An HTML string.
  */
-function _date_navigation_archivehtml($results, $archive_items, $display_year, $display_month, $values, $block_type) {
+function _date_navigation_archivehtml($results, $num_items, $display_year, $display_month, $values, $block_type) {
+  dsm($results);
+  dsm($num_items);
+  dsm($display_year);
+  dsm($display_month);
+  dsm($values);
+  dsm($block_type);
+  
   $output = t('No Content Posted.');
   $view_taxo_arg = 'all';
   $view_node_arg = 'all';
@@ -489,8 +496,8 @@ function _date_navigation_archivehtml($results, $archive_items, $display_year, $
               if ($use_jquerymenu) {
                 unset($node_item);
               }
-              // $archive_items number of nodes display in expanded archive.
-              if ($count <= $archive_items || $archive_items == 0) {
+              // $num_items number of nodes display in expanded archive.
+              if ($count <= $num_items || $num_items == 0) {
                 $children_nodes[] = l($title, 'node/' . $nid);
                 // If Using Jquery Menu.
                 if ($use_jquerymenu) {
