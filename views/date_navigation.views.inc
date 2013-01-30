@@ -35,28 +35,21 @@ function date_navigation_views_query_alter(&$view, &$query) {
         $view->build_info['substitutions']['%3'] = 'Custom node';
       }
     }
-    // Set breadcrumb.
-    if (isset($view->build_info['breadcrumb'])) {
-      $view->build_info['breadcrumb'] = array();
-    }
+    
+    // Set breadcrumb and title.
+    $view_base_title = $view->build_info['title'];
     $arg = explode('/', $_GET['q']);
-    $year = $arg[1];
-    $month = '';
-    $request_uri = 'articles/' . $arg[1] . '/' . $arg[2] . '/' . $arg[3];
-    $view->build_info['breadcrumb'] = array($request_uri => $year);
-    if (is_numeric($arg[2]) && $arg[2] != '00') {
-      $month = date('F', mktime(0, 0, 0, $arg[2]));
-      $year_url = 'articles/' . $arg[1] . '/00/' . $arg[3];
-      $view->build_info['breadcrumb'] = array($year_url => $arg[1], $request_uri => $month);
+    if(isset($arg[1])) {
+    	$year = $arg[1];
+    	$year_url = $arg[0]. '/' . $arg[1];
+    	$view->build_info['breadcrumb'][$year_url] = $year;
+    	$view->build_info['title'] = $view_base_title . ' from ' . $year;
     }
-
-    // Set title.
-    $title = array();
-    $title[] = 'Articles from ';
-    if (!empty($month)) {
-      $title[] = $month;
+    if(isset($arg[2])) {
+    	$month = date('F', mktime(0, 0, 0, $arg[2]));
+    	$month_url = $arg[0] . '/' . $arg[1] . '/' . $arg[2];
+    	$view->build_info['breadcrumb'][$month_url] = $month;
+    	$view->build_info['title'] = $view_base_title . ' from ' . $month . ', ' . $year;
     }
-    $title[] = $year;
-    $view->build_info['title'] = t(implode(' ', $title));
   }
 }
