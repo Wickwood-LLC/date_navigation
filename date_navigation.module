@@ -116,13 +116,21 @@ function date_navigation_block_view($delta = '') {
   $block = array();
   $num_items = variable_get('date_navigation_num_items', 0);
   $arg = explode('/', $_GET['q']);
-  $year = $arg[0] == 'articles' && $arg[1] != '' && is_numeric($arg[1]) ? $arg[1] : '';
-  $month = $arg[0] == 'articles' && $arg[2] != '00' && is_numeric($arg[2]) ? date('F', mktime(0, 0, 0, $arg[2])) : '';
+  $year = '';
+  $month = '';
+  
 
   // Node archive.
-  $block_types = variable_get('date_navigation_block_types', array('page'));
-  foreach ($block_types as $type => $value) {
+  $block_types = variable_get('date_navigation_block_types', array('article'));
+  foreach ($block_types as $type => $value) {    
     if ($delta == ('dn-node-' . $value)) {
+      if ($arg[0] == $value . 's' && $arg[1] != '' && is_numeric($arg[1])) {
+				$year = $arg[1];
+			}
+			if ($arg[0] == $value . 's' && $arg[2] != '00' && is_numeric($arg[2])) {
+				$month = date('F', mktime(0, 0, 0, $arg[2]));
+			}
+
       $block['subject'] = t('@names by Date', array('@name' => ucwords($value)));
       $block['content'] = theme('date_navigation_node', array(
         'value' => $value,
@@ -137,6 +145,13 @@ function date_navigation_block_view($delta = '') {
   $taxonomy_archive = variable_get('date_navigation_taxonomy_items', array());
   foreach ($taxonomy_archive as $type => $value) {
     if ($delta == ('dn-taxo-' . $value)) {
+      if ($arg[0] == $value . 's' && $arg[1] != '' && is_numeric($arg[1])) {
+				$year = $arg[1];
+			}
+			if ($arg[0] == $value . 's' && $arg[2] != '00' && is_numeric($arg[2])) {
+				$month = date('F', mktime(0, 0, 0, $arg[2]));
+			}
+
       $block['subject'] = t('@names by Date', array('@name' => ucwords($taxonomy_options[$value])));
       $block['content'] = theme('date_navigation_taxonomy', array(
         'value' => $value,
@@ -356,12 +371,12 @@ function _date_navigation_resultset($value, $type) {
  *   An HTML string.
  */
 function _date_navigation_archivehtml($results, $num_items, $display_year, $display_month, $values, $block_type) {
-  dsm($results);
-  dsm($num_items);
-  dsm($display_year);
-  dsm($display_month);
-  dsm($values);
-  dsm($block_type);
+//   dsm($results);
+//   dsm($num_items);
+//   dsm($display_year);
+//   dsm($display_month);
+//   dsm($values);
+//   dsm($block_type);
   
   $output = t('No Content Posted.');
   $view_taxo_arg = 'all';
