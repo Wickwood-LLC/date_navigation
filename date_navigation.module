@@ -84,7 +84,7 @@ function date_navigation_views_api() {
  * Implements hook_block_info().
  */
 function date_navigation_block_info() {
-  // Node archive.
+  // Create Date Navigation Blocks for each selected Node Type.
   $block_types = variable_get('date_navigation_block_types', array('page'));
   foreach ($block_types as $type => $value) {
     // Check the selected block types.
@@ -94,7 +94,7 @@ function date_navigation_block_info() {
       );
     }
   }
-  // Taxonomy archive.
+  // Create Date Navigation Blocks for each selected Taxonomy.
   $taxonomy_options = variable_get('date_navigation_taxonomy_options', array());
   $taxonomy_archive = variable_get('date_navigation_taxonomy_items', array());
   foreach ($taxonomy_archive as $type => $value) {
@@ -116,7 +116,6 @@ function date_navigation_block_view($delta = '') {
   $block = array();
   $archive_items = variable_get('date_navigation_items', 0);
   $arg = explode('/', $_GET['q']);
-  
   $year = $arg[0] == 'articles' && $arg[1] != '' && is_numeric($arg[1]) ? $arg[1] : '';
   $month = $arg[0] == 'articles' && $arg[2] != '00' && is_numeric($arg[2]) ? date('F', mktime(0, 0, 0, $arg[2])) : '';
 
@@ -432,7 +431,7 @@ function _date_navigation_archivehtml($results, $archive_items, $display_year, $
     foreach ($results as $year => $months) {
       $year_value = explode(' ', $year);
       // $year_value[0] contain year value and $year_value[1] conatian count.
-      $year_url = $view_node_arg . 's/' . $year_value[0] . '/00/' . $view_taxo_arg;
+      $year_url = $view_node_arg . 's/' . $year_value[0] . '/00/' . '/' . $view_taxo_arg;
 
       // Check for active year branch and block.
       $expand_year = $display_year == $year_value[0] && $active_block ? TRUE : FALSE;
@@ -459,7 +458,7 @@ function _date_navigation_archivehtml($results, $archive_items, $display_year, $
         foreach ($months as $month => $nodes) {
           $month_value = explode(' ', $month);
           // $month_value[0] contain month and $month_value[1] conatian count.
-          $month_url = $view_node_arg .'s/' . $year_value[0] . '/' . date('m', strtotime($month_value[0], '1'))  . '/' . $view_taxo_arg;
+          $month_url = $view_node_arg .'s/' . $year_value[0] . '/' . date('m', strtotime($month_value[0], '1')) . '/' . '/' . $view_taxo_arg;
 
           // Check for active month and block.
           $expand_month = $display_year == $year_value[0] && $display_month == $month_value[0] && $active_block ? TRUE : FALSE;
