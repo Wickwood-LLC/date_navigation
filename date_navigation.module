@@ -201,7 +201,7 @@ function theme_date_navigation_node($variables) {
   // Get an associate array contain the results.
   // Array([year(counter)] => Array([month(counter)] => Array([nid] => title)))
   $results = _date_navigation_resultset($node_type, 'node');
-  $html = _date_navigation_archivehtml($results, $num_items, $display_year, $display_month, $node_type, 'node');
+  $html = _date_navigation_html($results, $num_items, $display_year, $display_month, $node_type, 'node');
 
   return $html;
 }
@@ -236,7 +236,7 @@ function theme_date_navigation_taxonomy($variables) {
   }
 
   $results = _date_navigation_resultset($tids, 'terms');
-  $html = _date_navigation_archivehtml($results, $num_items, $display_year, $display_month, $tids, 'terms');
+  $html = _date_navigation_html($results, $num_items, $display_year, $display_month, $tids, 'terms');
 
   return $html;
 }
@@ -370,7 +370,7 @@ function _date_navigation_resultset($value, $type) {
  * @return string
  *   An HTML string.
  */
-function _date_navigation_archivehtml($results, $num_items, $display_year, $display_month, $values, $block_type) {
+function _date_navigation_html($results, $num_items, $display_year, $display_month, $values, $block_type) {
 //   dsm($results);
 //   dsm($num_items);
 //   dsm($display_year);
