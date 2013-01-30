@@ -273,7 +273,7 @@ function _date_navigation_resultset($value, $type) {
      	$query->fields('n', array('nid', 'type', 'title'))//SELECT the fields from node table
      	->fields('pd', array('published_at')); //SELECT the fields from publication_date table
      } else {
-      $query->fields('node', array('nid', 'type', 'title', 'created'));
+      $query->fields('n', array('nid', 'type', 'title', 'created'));
   	}
     $query->condition('status', 1);
     if ($value == 'custom') {
