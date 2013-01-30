@@ -127,8 +127,10 @@ function date_navigation_block_view($delta = '') {
       if ($arg[0] == $value . 's' && $arg[1] != '' && is_numeric($arg[1])) {
 				$year = $arg[1];
 			}
-			if ($arg[0] == $value . 's' && $arg[2] != '00' && is_numeric($arg[2])) {
-				$month = date('F', mktime(0, 0, 0, $arg[2]));
+			if (isset($arg[2])) {
+				if ($arg[0] == $value . 's' && $arg[2] != '00' && is_numeric($arg[2])) {
+					$month = date('F', mktime(0, 0, 0, $arg[2]));
+				}
 			}
 
       $block['subject'] = t('@names by Date', array('@name' => ucwords($value)));
