@@ -133,7 +133,7 @@ function date_navigation_block_view($delta = '') {
 
       $block['subject'] = t('@names by Date', array('@name' => ucwords($value)));
       $block['content'] = theme('date_navigation_node', array(
-        'value' => $value,
+        'node_type' => $value,
         'num_items' => $num_items,
         'year' => $year,
         'month' => $month,
@@ -154,7 +154,7 @@ function date_navigation_block_view($delta = '') {
 
       $block['subject'] = t('@names by Date', array('@name' => ucwords($taxonomy_options[$value])));
       $block['content'] = theme('date_navigation_taxonomy', array(
-        'value' => $value,
+        'taxonomy_value' => $value,
         'num_items' => $num_items,
         'year' => $year,
         'month' => $month,
