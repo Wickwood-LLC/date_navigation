@@ -190,7 +190,7 @@ function date_navigation_theme() {
 }
 
 /**
- * Returns a chronological archive block for node type.
+ * Returns a chronological navigation block for node type.
  */
 function theme_date_navigation_node($variables) {
   $node_type = $variables['value'];
@@ -207,7 +207,7 @@ function theme_date_navigation_node($variables) {
 }
 
 /**
- * Returns a chronological archive block for node Vocabulary or Term.
+ * Returns a chronological navigation block for node Vocabulary or Term.
  */
 function theme_date_navigation_taxonomy($variables) {
   $taxonomy_value = $variables['value'];
