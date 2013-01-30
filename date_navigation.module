@@ -124,8 +124,10 @@ function date_navigation_block_view($delta = '') {
   $block_types = variable_get('date_navigation_block_types', array('article'));
   foreach ($block_types as $type => $value) {
     if ($delta == ('dn-node-' . $value)) {
-      if ($arg[0] == $value . 's' && $arg[1] != '' && is_numeric($arg[1])) {
-				$year = $arg[1];
+      if (isset($arg[1])) {
+				if ($arg[0] == $value . 's' && $arg[1] != '' && is_numeric($arg[1])) {
+					$year = $arg[1];
+				}
 			}
 			if (isset($arg[2])) {
 				if ($arg[0] == $value . 's' && $arg[2] != '00' && is_numeric($arg[2])) {
