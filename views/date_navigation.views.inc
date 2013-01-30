@@ -60,12 +60,3 @@ function date_navigation_views_query_alter(&$view, &$query) {
     $view->build_info['title'] = t(implode(' ', $title));
   }
 }
-
-/**
- * Implements hook_views_default_views_alter().
- */
-function date_navigation_views_default_views_alter(&$views) {
-  if (isset($views['date_navigation'])) {
-    //dsm('date_navigation_views_default_views_alter has been called');
-  }
-}
