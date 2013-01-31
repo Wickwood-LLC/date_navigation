@@ -135,6 +135,72 @@ function date_navigation_views_default_views() {
 	$handler->display->display_options['title'] = 'Articles';
 	$handler->display->display_options['display_description'] = 'Display a view content type Article';
 	$handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+	$handler->display->display_options['defaults']['arguments'] = FALSE;
+	if (module_exists('publication_date')) {
+		/* Contextual filter: Content: Published year */
+		$handler->display->display_options['arguments']['published_at_year']['id'] = 'published_at_year';
+		$handler->display->display_options['arguments']['published_at_year']['table'] = 'publication_date';
+		$handler->display->display_options['arguments']['published_at_year']['field'] = 'published_at_year';
+		$handler->display->display_options['arguments']['published_at_year']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['published_at_year']['title'] = 'Articles from  %1';
+		$handler->display->display_options['arguments']['published_at_year']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['published_at_year']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['published_at_year']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['published_at_year']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Published month */
+		$handler->display->display_options['arguments']['published_at_month']['id'] = 'published_at_month';
+		$handler->display->display_options['arguments']['published_at_month']['table'] = 'publication_date';
+		$handler->display->display_options['arguments']['published_at_month']['field'] = 'published_at_month';
+		$handler->display->display_options['arguments']['published_at_month']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['published_at_month']['title'] = 'Articles from %2 %1';
+		$handler->display->display_options['arguments']['published_at_month']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['published_at_month']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['published_at_month']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['published_at_month']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Published day */
+		$handler->display->display_options['arguments']['published_at_day']['id'] = 'published_at_day';
+		$handler->display->display_options['arguments']['published_at_day']['table'] = 'publication_date';
+		$handler->display->display_options['arguments']['published_at_day']['field'] = 'published_at_day';
+		$handler->display->display_options['arguments']['published_at_day']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['published_at_day']['title'] = 'Articles from %2 %3, %1';
+		$handler->display->display_options['arguments']['published_at_day']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['published_at_day']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['published_at_day']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['published_at_day']['summary_options']['items_per_page'] = '10';
+	} else {
+		/* Contextual filter: Content: Created year */
+		$handler->display->display_options['arguments']['created_year']['id'] = 'created_year';
+		$handler->display->display_options['arguments']['created_year']['table'] = 'node';
+		$handler->display->display_options['arguments']['created_year']['field'] = 'created_year';
+		$handler->display->display_options['arguments']['created_year']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['created_year']['title'] = 'Articles from  %1';
+		$handler->display->display_options['arguments']['created_year']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['created_year']['default_argument_skip_url'] = 0;
+		$handler->display->display_options['arguments']['created_year']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['created_year']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['created_year']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Created month */
+		$handler->display->display_options['arguments']['created_month']['id'] = 'created_month';
+		$handler->display->display_options['arguments']['created_month']['table'] = 'node';
+		$handler->display->display_options['arguments']['created_month']['field'] = 'created_month';
+		$handler->display->display_options['arguments']['created_month']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['created_month']['title'] = 'Articles from %2 %1';
+		$handler->display->display_options['arguments']['created_month']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['created_month']['default_argument_skip_url'] = 0;
+		$handler->display->display_options['arguments']['created_month']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['created_month']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['created_month']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Created day */
+		$handler->display->display_options['arguments']['created_day']['id'] = 'created_day';
+		$handler->display->display_options['arguments']['created_day']['table'] = 'node';
+		$handler->display->display_options['arguments']['created_day']['field'] = 'created_day';
+		$handler->display->display_options['arguments']['created_day']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['created_day']['title'] = 'Articles from %2 %3, %1';
+		$handler->display->display_options['arguments']['created_day']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['created_day']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['created_day']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['created_day']['summary_options']['items_per_page'] = '10';
+	}
 	$handler->display->display_options['defaults']['filter_groups'] = FALSE;
 	$handler->display->display_options['defaults']['filters'] = FALSE;
 	/* Filter criterion: Content: Published */
@@ -164,8 +230,82 @@ function date_navigation_views_default_views() {
 	$handler->display->display_options['title'] = 'Pages';
 	$handler->display->display_options['display_description'] = 'Display a view content type Page';
 	$handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-	$handler->display->display_options['defaults']['filter_groups'] = FALSE;
-	$handler->display->display_options['defaults']['filters'] = FALSE;
+	$handler->display->display_options['defaults']['arguments'] = FALSE;
+	if (module_exists('publication_date')) {
+		/* Sort criterion: Content: Published at */
+		$handler->display->display_options['sorts']['published_at']['id'] = 'published_at';
+		$handler->display->display_options['sorts']['published_at']['table'] = 'publication_date';
+		$handler->display->display_options['sorts']['published_at']['field'] = 'published_at';
+		$handler->display->display_options['sorts']['published_at']['order'] = 'DESC';
+		/* Contextual filter: Content: Published year */
+		$handler->display->display_options['arguments']['published_at_year']['id'] = 'published_at_year';
+		$handler->display->display_options['arguments']['published_at_year']['table'] = 'publication_date';
+		$handler->display->display_options['arguments']['published_at_year']['field'] = 'published_at_year';
+		$handler->display->display_options['arguments']['published_at_year']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['published_at_year']['title'] = 'Pages from  %1';
+		$handler->display->display_options['arguments']['published_at_year']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['published_at_year']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['published_at_year']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['published_at_year']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Published month */
+		$handler->display->display_options['arguments']['published_at_month']['id'] = 'published_at_month';
+		$handler->display->display_options['arguments']['published_at_month']['table'] = 'publication_date';
+		$handler->display->display_options['arguments']['published_at_month']['field'] = 'published_at_month';
+		$handler->display->display_options['arguments']['published_at_month']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['published_at_month']['title'] = 'Pages from %2 %1';
+		$handler->display->display_options['arguments']['published_at_month']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['published_at_month']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['published_at_month']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['published_at_month']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Published day */
+		$handler->display->display_options['arguments']['published_at_day']['id'] = 'published_at_day';
+		$handler->display->display_options['arguments']['published_at_day']['table'] = 'publication_date';
+		$handler->display->display_options['arguments']['published_at_day']['field'] = 'published_at_day';
+		$handler->display->display_options['arguments']['published_at_day']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['published_at_day']['title'] = 'Pages from %2 %3, %1';
+		$handler->display->display_options['arguments']['published_at_day']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['published_at_day']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['published_at_day']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['published_at_day']['summary_options']['items_per_page'] = '10';
+	} else {
+		/* Sort criterion: Content: Post date */
+		$handler->display->display_options['sorts']['created']['id'] = 'created';
+		$handler->display->display_options['sorts']['created']['table'] = 'node';
+		$handler->display->display_options['sorts']['created']['field'] = 'created';
+		$handler->display->display_options['sorts']['created']['order'] = 'DESC';
+		/* Contextual filter: Content: Created year */
+		$handler->display->display_options['arguments']['created_year']['id'] = 'created_year';
+		$handler->display->display_options['arguments']['created_year']['table'] = 'node';
+		$handler->display->display_options['arguments']['created_year']['field'] = 'created_year';
+		$handler->display->display_options['arguments']['created_year']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['created_year']['title'] = 'Pages from  %1';
+		$handler->display->display_options['arguments']['created_year']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['created_year']['default_argument_skip_url'] = 0;
+		$handler->display->display_options['arguments']['created_year']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['created_year']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['created_year']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Created month */
+		$handler->display->display_options['arguments']['created_month']['id'] = 'created_month';
+		$handler->display->display_options['arguments']['created_month']['table'] = 'node';
+		$handler->display->display_options['arguments']['created_month']['field'] = 'created_month';
+		$handler->display->display_options['arguments']['created_month']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['created_month']['title'] = 'Pages from %2 %1';
+		$handler->display->display_options['arguments']['created_month']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['created_month']['default_argument_skip_url'] = 0;
+		$handler->display->display_options['arguments']['created_month']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['created_month']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['created_month']['summary_options']['items_per_page'] = '10';
+		/* Contextual filter: Content: Created day */
+		$handler->display->display_options['arguments']['created_day']['id'] = 'created_day';
+		$handler->display->display_options['arguments']['created_day']['table'] = 'node';
+		$handler->display->display_options['arguments']['created_day']['field'] = 'created_day';
+		$handler->display->display_options['arguments']['created_day']['title_enable'] = TRUE;
+		$handler->display->display_options['arguments']['created_day']['title'] = 'Pages from %2 %3, %1';
+		$handler->display->display_options['arguments']['created_day']['default_argument_type'] = 'fixed';
+		$handler->display->display_options['arguments']['created_day']['summary']['number_of_records'] = '0';
+		$handler->display->display_options['arguments']['created_day']['summary']['format'] = 'default_summary';
+		$handler->display->display_options['arguments']['created_day']['summary_options']['items_per_page'] = '10';
+	}
 	/* Filter criterion: Content: Published */
 	$handler->display->display_options['filters']['status']['id'] = 'status';
 	$handler->display->display_options['filters']['status']['table'] = 'node';
