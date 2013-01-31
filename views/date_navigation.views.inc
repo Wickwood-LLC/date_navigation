@@ -36,20 +36,22 @@ function date_navigation_views_query_alter(&$view, &$query) {
       }
     }
     
-    // Set breadcrumb and title.
-    $view_base_title = $view->build_info['title'];
+    // Set breadcrumb.
     $arg = explode('/', $_GET['q']);
     if(isset($arg[1])) {
     	$year = $arg[1];
     	$year_url = $arg[0]. '/' . $arg[1];
     	$view->build_info['breadcrumb'][$year_url] = $year;
-    	$view->build_info['title'] = $view_base_title . ' from ' . $year;
     }
     if(isset($arg[2])) {
     	$month = date('F', mktime(0, 0, 0, $arg[2]));
     	$month_url = $arg[0] . '/' . $arg[1] . '/' . $arg[2];
     	$view->build_info['breadcrumb'][$month_url] = $month;
-    	$view->build_info['title'] = $view_base_title . ' from ' . $month . ', ' . $year;
+    }
+    if(isset($arg[3])) {
+    	$day = date('j', mktime(0, 0, 0, 0, $arg[3]));
+    	$day_url = $arg[0] . '/' . $arg[1] . '/' . $arg[2] . '/' . $arg[3];
+    	$view->build_info['breadcrumb'][$day_url] = $day;
     }
   }
 }
