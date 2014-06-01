@@ -7,6 +7,7 @@ package = User Interface
 configure = admin/config/user-interface/date-navigation/settings
 
 dependencies[] = views
+dependencies[] = publication_date (1.x-dev-wwm)
 
 files[] = date_navigation.admin.inc
 files[] = date_navigation.views.inc
